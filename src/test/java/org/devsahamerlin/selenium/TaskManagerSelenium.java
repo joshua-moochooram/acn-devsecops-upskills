@@ -56,6 +56,7 @@ class TaskManagerSelenium {
         System.out.println("Running tests against: " + baseUrl);
     }
 
+
     @AfterEach
     void tearDown() {
         if (driver != null) {
