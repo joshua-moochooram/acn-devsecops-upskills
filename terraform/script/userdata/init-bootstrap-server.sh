@@ -40,6 +40,7 @@ trivy --version
 
 sudo apt-get install ansible -y
 sudo apt-get install git -y
+sudo apt-get chromium-browser -y
 sudo mkdir /etc/ansible/
 
 sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
