@@ -27,7 +27,7 @@ import java.nio.file.StandardCopyOption;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskManagerSelenium {
+class TaskManagerSeleniumTests {
 
     private WebDriver driver;
     private WebDriverWait wait;
