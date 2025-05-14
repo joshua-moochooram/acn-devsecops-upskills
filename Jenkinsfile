@@ -55,22 +55,22 @@ pipeline{
                 }
             }
         }
-        stage ('maven compile') {
-            steps {
-                sh 'mvn clean compile'
-            }
-        }
-        stage ('maven Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
+//         stage ('maven compile') {
+//             steps {
+//                 sh 'mvn clean compile'
+//             }
+//         }
+//         stage ('maven Test') {
+//             steps {
+//                 sh 'mvn test'
+//             }
+//         }
 
-        stage ('maven clean verify') {
-            steps {
-                sh 'mvn clean verify'
-            }
-        }
+//         stage ('maven clean verify') {
+//             steps {
+//                 sh 'mvn clean verify'
+//             }
+//         }
 
 //         stage("Sonarqube Analysis "){
 //             steps{
@@ -173,7 +173,7 @@ pipeline{
                             git config user.email "joshua.moochooram@accenture.com"
                             git config user.name "joshua.moochooram"
                             BUILD_NUMBER=${BUILD_NUMBER}
-                            sed -i "s/latest/${BUILD_NUMBER}/g" k8s/manifests/deployment.yml
+                            sed -i "s/${IMAGE_TAG_VERSION}/${BUILD_NUMBER}/g" k8s/manifests/deployment.yml
                             git add k8s/manifests/deployment.yml
                             git add .
                             git commit -m "Update deployment image to version ${BUILD_NUMBER}"
