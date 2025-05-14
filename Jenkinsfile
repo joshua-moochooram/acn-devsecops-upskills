@@ -150,44 +150,44 @@ pipeline{
             }
         }
 
-        stage ('Deploy to container'){
-            steps{
-                sh """
-                    sudo docker ps -a --filter name=joshua-tasksmanager -q | xargs -r sudo docker stop
-                    sudo docker ps -a --filter name=joshua-tasksmanager -q | xargs -r sudo docker rm -f
-                    sudo docker images joshuamoochooram/tasksmanager -q | xargs -r sudo docker rmi -f
-                    sudo docker run -d --name joshua-tasksmanager -p 8089:8082 joshuamoochooram/tasksmanager:${BUILD_NUMBER}
-                """
-            }
-        }
-
-        stage('Run Selenium Tests') {
-            steps {
-                sh 'sleep 10'
-
-                sh 'mvn -Dtest=TaskManagerSeleniumTests test'
-            }
-        }
-
-//         stage('Update Deployment File') {
-//                 environment {
-//                     GIT_REPO_NAME = "acn-taskmanger-upskills"
-//                     GIT_USER_NAME = "joshua-moochooram"
-//                 }
-//                 steps {
-//                     withCredentials([string(credentialsId: 'gitops-user-secret-text', variable: 'GITHUB_TOKEN')]) {
-//                         sh '''
-//                             git config user.email "joshua.moochooram@accenture.com"
-//                             git config user.name "joshua.moochooram"
-//                             BUILD_NUMBER=${BUILD_NUMBER}
-//                             sed -i "s/${IMAGE_TAG_VERSION}/${BUILD_NUMBER}/g" k8s/manifests/deployment.yml
-//                             git add k8s/manifests/deployment.yml
-//                             git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-//                             git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-//                         '''
-//                     }
-//                 }
+//         stage ('Deploy to container'){
+//             steps{
+//                 sh """
+//                     sudo docker ps -a --filter name=joshua-tasksmanager -q | xargs -r sudo docker stop
+//                     sudo docker ps -a --filter name=joshua-tasksmanager -q | xargs -r sudo docker rm -f
+//                     sudo docker images joshuamoochooram/tasksmanager -q | xargs -r sudo docker rmi -f
+//                     sudo docker run -d --name joshua-tasksmanager -p 8089:8082 joshuamoochooram/tasksmanager:${BUILD_NUMBER}
+//                 """
+//             }
 //         }
+//
+//         stage('Run Selenium Tests') {
+//             steps {
+//                 sh 'sleep 10'
+//
+//                 sh 'mvn -Dtest=TaskManagerSeleniumTests test'
+//             }
+//         }
+
+        stage('Update Deployment File') {
+                environment {
+                    GIT_REPO_NAME = "acn-devsecops-upskills"
+                    GIT_USER_NAME = "joshua-moochooram"
+                }
+                steps {
+                    withCredentials([string(credentialsId: 'joshua-gitops-user-secret-text', variable: 'GITHUB_TOKEN')]) {
+                        sh '''
+                            git config user.email "joshua.moochooram@accenture.com"
+                            git config user.name "joshua.moochooram"
+                            BUILD_NUMBER=${BUILD_NUMBER}
+                            sed -i "s/${IMAGE_TAG_VERSION}/${BUILD_NUMBER}/g" k8s/manifests/deployment.yml
+                            git add k8s/manifests/deployment.yml
+                            git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                        '''
+                    }
+                }
+        }
     }
 
 //     post {
