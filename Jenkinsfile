@@ -161,13 +161,6 @@ pipeline{
 //             }
 //         }
 //
-//         stage('Run Selenium Tests') {
-//             steps {
-//                 sh 'sleep 10'
-//
-//                 sh 'mvn -Dtest=TaskManagerSeleniumTests test'
-//             }
-//         }
 
         stage('Update Deployment File') {
                 environment {
@@ -187,6 +180,13 @@ pipeline{
                         '''
                     }
                 }
+        }
+
+        stage('Run Selenium Tests') {
+            steps {
+                sh 'sleep 30'
+                sh 'mvn -Dtest=TaskManagerSeleniumTests test'
+            }
         }
     }
 
