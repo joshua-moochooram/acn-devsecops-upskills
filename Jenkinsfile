@@ -165,7 +165,7 @@ pipeline{
             steps {
                 sh 'sleep 10'
 
-                sh 'mvn -Dtest=TaskManagerSelenium test'
+                sh 'mvn -Dtest=TaskManagerSeleniumTests test'
             }
         }
 
