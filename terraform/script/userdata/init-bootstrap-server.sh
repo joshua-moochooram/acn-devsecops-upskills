@@ -18,9 +18,14 @@ sudo apt-get update
 sudo apt-get install docker.io -y
 sudo usermod -aG docker $USER
 newgrp docker
-sudo chmod 660 /var/run/docker.sock
+sudo chmod 755 /var/run/docker.sock
 sudo chown -R $USER:docker /var/run/docker.sock
 #sudo chmod 777 /var/run/docker.sock
+
+wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux-aarch64.tar.gz
+tar -xvzf geckodriver-v0.33.0-linux-aarch64.tar.gz
+chmod +x geckodriver
+sudo mv geckodriver /home/ubuntu/
 
 #sudo chown root:docker /var/run/docker.sock
 
@@ -40,7 +45,10 @@ trivy --version
 
 sudo apt-get install ansible -y
 sudo apt-get install git -y
+
 sudo apt-get chromium-browser -y
+sudo webdrivermanager chrome:version=136.0.7103.92 --arm64
+
 sudo mkdir /etc/ansible/
 
 sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT

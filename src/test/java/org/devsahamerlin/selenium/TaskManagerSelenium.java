@@ -43,11 +43,12 @@ class TaskManagerSelenium {
     @BeforeEach
     void setUp() {
         // Set up Chrome in headless mode for CI environments
-        ChromeOptions options = new ChromeOptions();
+        FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-allow-origins=*");
+
+        System.setProperty("webdriver.gecko.driver", "/home/ubuntu/geckodriver");
 
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
